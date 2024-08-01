@@ -1011,9 +1011,11 @@ function transformPlane(
     tri.rotateY(rotation.y);
     tri.rotateZ(rotation.z);
   }
+	/*
   tri.vertices[0].add(position);
   tri.vertices[1].add(position);
   tri.vertices[2].add(position);
+  */
   array[index + 0] = tri.vertices[0].x;
   array[index + 1] = tri.vertices[0].y;
   array[index + 2] = tri.vertices[0].z;
@@ -1045,9 +1047,11 @@ function transformPlane(
     tri.rotateY(rotation.y);
     tri.rotateZ(rotation.z);
   }
+	/*
   tri.vertices[0].add(position);
   tri.vertices[1].add(position);
   tri.vertices[2].add(position);
+  */
   array[index + 9] = tri.vertices[2].x;
   array[index + 10] = tri.vertices[2].y;
   array[index + 11] = tri.vertices[2].z;
