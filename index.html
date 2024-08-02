@@ -16,10 +16,14 @@
         <a-asset-item id="particlesJson" src="particles-fireworks.json"></a-asset-item>
         <img src="sprite.png" id="particleTex">
       </a-assets>
-
+      <!--
       <a-entity position="0 1 -5"
         trigger
         particleplayer="on: particleplayerstart; src: #particlesJson; img: #particleTex; dur: 4000; count: 50%; scale: 0.6; pscale: 2; interpolate: true; shader: standard; poolSize: 20"></a-entity>
+      -->
+      <a-entity position="0 1 -5"
+        trigger
+        particleplayer="on: particleplayerstart; src: #particlesJson; dur: 4000; count: 50%; scale: 0.6; pscale: 2; interpolate: true; shader: standard; poolSize: 20"></a-entity>
 
       <a-light position="6 14 -2" type="point" color="#f29"></a-light>
       <a-light position="-6 -14 12" color="#f92" type="point"></a-light>
