@@ -13,7 +13,7 @@ body {
 	width:  100svw;
 	height: 100svh;
 	overflow: auto;
-	display: none;
+	visibility: hidden;
 }
 /*
 @media screen and (orientation:portrait) {
@@ -48,13 +48,15 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	justify-content: center;
 	align-items: center;
 	position: absolute;
+	visibility: visible;
 }
 
 
 .center_ui {
-  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-color: #fff;
   font-size: 24px;
+  font-weight: bold;
 }
 
 
@@ -75,4 +77,9 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	bottom: 20px;
 	right: 20px;
 	background-color: rgba(255, 255, 255, 0.3);
+	visibility: visible;
+}
+
+#main {
+	visibility: visible;
 }
