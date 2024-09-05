@@ -304,38 +304,43 @@
 	<!--ズームなどの一部動作の制限-->
 	<body style="touch-action:none">
 
-		<!--iOSにおいてDeviceMotion取得するために、ユーザーに画面タッチを強制-->
-		<div id="ui" class="permission_ui">
-			<p id="discription" class="permission_ui center_ui">画面をタッチしてください</p>
+		<div id="mainWrapper">
+			
+			<!--iOSにおいてDeviceMotion取得するために、ユーザーに画面タッチを強制-->
+			<div id="ui" class="permission_ui">
+				<p id="discription" class="permission_ui center_ui">画面をタッチしてください</p>
+			</div>
+
+			<!--3D空間-->
+			
+			<!--
+			permission_uiを優先するために初期状態では表示しない
+			device-orientation-permission-uiをfalseにすることでa-frameにデフォルトで搭載されているDeviceMotion取得用UIを無視
+			embedded arjsでarモードを有効化
+			vr-mode-uiをfalseにすることで右下の謎のボタンを削除(Androidだとできてない？)
+			id="main"は今のところ意味なし
+			-->
+			<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none; position: static;">	
+				<a-assets>
+					<img id="fireball" src="images/fireball.png"/>	
+					<img id="fireballSheet" src="images/fireball-up.png"/>
+			  	</a-assets>
+				<a-entity id='camera' camera look-controls="touchEnabled: false;" wasd-controls position="0 8 0"></a-entity>
+					
+					<!--移動オブジェクトの移動先の取得-->
+				<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;"></a-entity> 
+
+				<!--rayの衝突用-->
+				<a-plane cursor-listener id="target" rotation = "-90 0 0" position="0 -5 0" scale="500 500 1" color = "red" opacity = "0"></a-plane>
+				
+			</a-scene>
+
+
+			<!--  FIRE!!!!!!  -->
+			<input type = "button" id = "b1" value = "打ち上げ" onclick = "tenka();" style="display:none">
+			
 		</div>
 
-		<!--3D空間-->
-		
-		<!--
-		permission_uiを優先するために初期状態では表示しない
-		device-orientation-permission-uiをfalseにすることでa-frameにデフォルトで搭載されているDeviceMotion取得用UIを無視
-		embedded arjsでarモードを有効化
-		vr-mode-uiをfalseにすることで右下の謎のボタンを削除(Androidだとできてない？)
-		id="main"は今のところ意味なし
-		-->
-		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none; position: static;">	
-			<a-assets>
-				<img id="fireball" src="images/fireball.png"/>	
-				<img id="fireballSheet" src="images/fireball-up.png"/>
-		  	</a-assets>
-			<a-entity id='camera' camera look-controls="touchEnabled: false;" wasd-controls position="0 8 0"></a-entity>
-				
-				<!--移動オブジェクトの移動先の取得-->
-			<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;"></a-entity> 
-
-			<!--rayの衝突用-->
-			<a-plane cursor-listener id="target" rotation = "-90 0 0" position="0 -5 0" scale="500 500 1" color = "red" opacity = "0"></a-plane>
-			
-		</a-scene>
-
-
-		<!--  FIRE!!!!!!  -->
-		<input type = "button" id = "b1" value = "打ち上げ" onclick = "tenka();" style="display:none">
 		
 		<!--仮UI-->
 
