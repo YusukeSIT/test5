@@ -36,6 +36,8 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 
 
 .center_ui {
+  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-color: #fff;
   font-size: 20px;
 }
 
