@@ -37,7 +37,7 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	left: 0;
 
 	background-color: #b0b0b0;
-	opacity: 0.4;
+	opacity: 0.3;
 
 	display: flex;
 	justify-content: center;
@@ -48,10 +48,11 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 
 
 .center_ui {
-  -webkit-text-stroke-width: 1px;
+	opacity: 1.0;
+  -webkit-text-stroke-width: 0.5px;
   -webkit-text-stroke-color: #fff;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 900;
   color: black;
 }
 
@@ -78,4 +79,25 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 
 #main {
 	visibility: visible;
+}
+
+#UIVisibilityButton {
+	left: 0;
+	top: 0;
+	position: relative;
+}
+
+#UIWrapper {
+	position: absolute;
+	width: 30%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #b0b0b0;
+	opacity: 0.3;
+
+}
+
+.next {
+	display: flex;
 }
