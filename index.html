@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" charset="utf-8">
+		<link rel="stylesheet" href="./data/style.css" type="text/css">
+		<script src="js/aframe-master.1.0.4.min.js"></script>
+		<script src="js/aframe-environment-component.min-old.js"></script>
+		<script src="js/aframe-spe-particles-component.js"></script>
+	   	<script src="js/aframe-spritesheet-animation.js"></script>
+		<script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+		
+		<!--  花火のアニメーション再生に必要  -->
+		<script>
+		AFRAME.registerComponent('cursor-listener', {
+    		init: function () {
+			this.el.addEventListener('raycaster-intersected', evt => {
+   		     this.raycaster = evt.detail.el;
+   		   });
+   		   this.el.addEventListener('raycaster-intersected-cleared', evt => {
+   		     this.raycaster = null;
+   		   });
+  		  },
+
+  		  // 毎フレームの処理
+  		  tick: function () {
+  		      if (!this.raycaster) { return; }  // Not intersecting.
+  		      let intersection = this.raycaster.components.raycaster.getIntersection(this.el).point;
+  		      if (!intersection) { return; } // Not intersecting
+  		      // 箱の座標を衝突点にセット
+  		      intersection.y += 0.5;
+  		      new_gltf_model.setAttribute('position', intersection);
+  		      //new_box.setAttribute('rotation', cam.getAttribute('rotation'));
+  		  	}
+ 		});
+
+		</script>
+		<script>
+
+		
+		function randomNormal(min, max)
+		{
+			let rand = 0;
+			for (let n = 0; n < 6; n++)
+				rand += Math.random();
+			return min + (max - min) * (rand / 6);
+		}
+
+		function randomUniform(min, max)
+		{
+			return min + (max - min) * Math.random();
+		}
+
+		/*
+		AFRAME.registerComponent('spawner', 
+		{
+			init: function()
+			{
+				this.sceneElement = document.querySelector('a-scene');
+			},
+
+			tick: function(time, deltaTime) // deltaTime: milliseconds
+			{
+				let deltaSeconds = deltaTime/1000;
+				let eventFrequency = 0.75;
+
+				if ( Math.random() < eventFrequency * deltaSeconds )
+				{
+					console.log( "Firework!" );
+					let angle = THREE.Math.degToRad(270);
+					let angleSpread = THREE.Math.degToRad(90);
+					let angleRadians = angle + randomNormal(-angleSpread, angleSpread); 
+					let radius = 9;
+					let x = radius * Math.cos(angleRadians);
+					let y = 0;
+					let z = radius * Math.sin(angleRadians);
+
+					let firework = document.createElement("a-entity");
+					firework.setAttribute("firework", "");
+					firework.setAttribute("position", {"x":x, "y":y, "z":z} );
+
+					// random flight parameters
+					let maxHeight = randomNormal(4, 8);
+					firework.setAttribute("firework", "maxHeight", maxHeight );
+					let riseTime = randomNormal(2, 3);
+					firework.setAttribute("firework", "riseTime", riseTime );
+					this.sceneElement.appendChild( firework );
+
+					// chance of multi-firework
+					// 0.10 = 1/10 double, 1/100 triple, 1/1000 quadruple, etc.
+					// 0.20 =  1/5 double,  1/25 triple,  1/125 quadruple, etc.
+					while ( Math.random() < 0.15 )
+					{
+						let fireworkExtra = document.createElement("a-entity");
+						fireworkExtra.setAttribute("firework", "");
+						// synchronize position, height, time to explosion
+						fireworkExtra.setAttribute("position", {"x":x, "y":y, "z":z} );
+						fireworkExtra.setAttribute("firework", "maxHeight", maxHeight );
+						fireworkExtra.setAttribute("firework", "riseTime", riseTime );
+						this.sceneElement.appendChild( fireworkExtra );
+					}
+				}
+			}
+		});
+		*/
+
+		AFRAME.registerComponent('firework', 
+		{
+			schema: 
+			{
+				color:  {type: 'string', default: ""},
+				maxHeight: {type: 'number', default: 4.5},
+				riseTime: {type: 'number', default: 2.5}	// time to reach maxHeight
+			},
+
+			randomColor: function()
+			{
+				let colorList = ["red", "orange", "gold", "green", "cyan", "#0088FF", "violet"];
+				let colorIndex = Math.floor( colorList.length * Math.random() );
+				return colorList[colorIndex];
+			},
+
+			init: function()
+			{	
+				// set random color if none already set
+				if ( this.data.color == "" )
+					this.data.color = this.randomColor();
+
+				// set up movement animation
+				let p = this.el.object3D.position;
+				this.el.setAttribute("animation__position", "property", "position");
+				this.el.setAttribute("animation__position", "from", {"x":p.x, "y":p.y, "z":p.z});
+				this.el.setAttribute("animation__position", "to", {"x":p.x, "y":p.y + this.data.maxHeight, "z":p.z});
+				this.el.setAttribute("animation__position", "dur", this.data.riseTime * 1000);
+				this.el.setAttribute("animation__position", "easing", "easeOutQuad");  // fast at start, then slower
+				this.el.setAttribute("scale", "3 3 3");
+				
+				// trail effect ----------------------------------------------------------
+
+		        this.particleTrail = document.createElement("a-image");
+		        this.particleTrail.setAttribute("position", "0 -0.1 0");
+		        this.particleTrail.setAttribute("width", "0.5");
+		        this.particleTrail.setAttribute("height", "0.5");
+		        this.particleTrail.setAttribute("scale", "0.3 0.3 0.3");
+		        
+		        this.particleTrail.setAttribute("src", "#fireballSheet");
+
+		        this.particleTrail.setAttribute("spritesheet-animation", "rows: 1; columns: 8; frameDuration: 0.08; loop: true;");
+
+				this.particleTrail.setAttribute("material", "blending: additive; transparent: true; opacity: 1;");
+				
+				
+		        this.particleTrail.setAttribute("animation__fade", "property", "material.opacity");
+				this.particleTrail.setAttribute("animation__fade", "from", 1.0);
+				this.particleTrail.setAttribute("animation__fade", "to", 0.2);
+				this.particleTrail.setAttribute("animation__fade", "dur", this.data.riseTime * 1000);
+				this.particleTrail.setAttribute("animation__fade", "easing", "easeOutQuad");  // slow at start, then fast
+				
+
+		        this.particleTrail.setAttribute("animation__shrink", "property", "scale");
+				this.particleTrail.setAttribute("animation__shrink", "from", "0.3 0.3 0.3");
+				this.particleTrail.setAttribute("animation__shrink", "to", "0.09 0.09 0.09");
+				this.particleTrail.setAttribute("animation__shrink", "dur", this.data.riseTime * 1000);
+				this.particleTrail.setAttribute("animation__shrink", "easing", "easeOutQuad");  // slow at start, then fast
+
+				this.el.appendChild(this.particleTrail);
+
+				// burst effect ----------------------------------------------------------
+
+		        this.particleBurst = document.createElement("a-entity");
+		        this.particleBurst.setAttribute("spe-particles", "");
+
+				this.particleBurst.setAttribute("spe-particles", "texture", "images/particles/sparkle.png");
+				this.particleBurst.setAttribute("spe-particles", "blending", "additive");
+				this.particleBurst.setAttribute("spe-particles", "distribution", "sphere");
+				this.particleBurst.setAttribute("spe-particles", "radius", 0.06);
+				
+				// particles both shrink and fade during last moments
+				this.particleBurst.setAttribute("spe-particles", "opacity", [1, 1, 1, 0]);
+				this.particleBurst.setAttribute("spe-particles", "size", [18, 18, 18, 0]);
+				
+				let particleCount = Math.floor( randomUniform(500, 1100) );
+				this.particleBurst.setAttribute("spe-particles", "particleCount", particleCount);
+
+				// change of particle burst vs. particle stream
+				if ( Math.random() < 0.80 )
+					this.particleBurst.setAttribute("spe-particles", "activeMultiplier", particleCount);
+				else
+					this.particleBurst.setAttribute("spe-particles", "activeMultiplier", particleCount/128);
+				
+				// note: when distribution = 'sphere', only first component of velocity vectors are used
+				let baseVelocity = randomUniform(1, 2);
+				this.particleBurst.setAttribute("spe-particles", "velocity", {"x":baseVelocity, "y":0, "z":0});
+				this.particleBurst.setAttribute("spe-particles", "velocitySpread", {"x":0.5, "y":0, "z":0});
+				this.particleBurst.setAttribute("spe-particles", "drag", 1.00);
+				this.particleBurst.setAttribute("spe-particles", "randomizeVelocity", true);
+				
+				// add a bit of gravity
+				this.particleBurst.setAttribute("spe-particles", "accelerationDistribution", "box");
+				this.particleBurst.setAttribute("spe-particles", "acceleration", {"x":0, "y":-0.2, "z":0});
+				this.particleBurst.setAttribute("spe-particles", "accelerationSpread", {"x":0, "y":0.2, "z":0});
+				
+				// how long will particles last?
+		        this.burstDuration = randomUniform(1.0, 3.0);
+		        this.particleBurst.setAttribute("spe-particles", "maxAge", this.burstDuration);
+		        this.particleBurst.setAttribute("spe-particles", "maxAgeSpread", this.burstDuration/4);
+		        // duration = maximum amount of time to emit particles;
+		        //        	  should be less than smallest max age to prevent second burst
+				this.particleBurst.setAttribute("spe-particles", "duration", 0.5);
+
+				// default: steady color
+				let colorArray = ["white", this.data.color, this.data.color, this.data.color];
+				// random chance of color shifting
+				if ( Math.random() < 0.25 )
+				{
+					let color2 = this.data.color;
+					// make sure second color is different from first
+					while (color2 == this.data.color)
+					{
+						color2 = this.randomColor();
+					}
+					colorArray = ["white", this.data.color, color2, color2];
+				}
+		        this.particleBurst.setAttribute("spe-particles", "color", colorArray);
+
+		        // disable burst effect for now;
+		        //   will be enabled (in tick method) after reaching max height
+				this.particleBurst.setAttribute("spe-particles", "enabled", false);
+
+		  		this.el.appendChild(this.particleBurst);
+
+				this.elapsedTime = 0;
+				this.burstStart = false;
+			},
+			
+			tick: function(time, deltaTime)
+			{
+				this.elapsedTime += deltaTime/1000;
+
+				// firework has reached max height, start burst effect
+				if (this.elapsedTime > this.data.riseTime && this.burstStart == false)
+				{
+					this.burstStart = true;
+					this.particleBurst.setAttribute("spe-particles", "enabled", true);
+
+					this.el.removeChild( this.particleTrail );
+
+				}
+
+				// firework finished; remove self from scene
+				//  need to take into account particle age variation (1.25 factor)
+				if (this.elapsedTime > this.data.riseTime + this.burstDuration * 1.25)
+				{
+					let element = this.el;
+		      		element.parentNode.removeChild(element);
+				}
+			}
+		});
+
+		/*
+		// runs when user clicks button
+		AFRAME.registerComponent('start', 
+		{
+			init: function()
+			{
+				// block pointer events until buttonEnter is clicked
+				let uiDiv = document.getElementById("uiDiv");
+				uiDiv.style["pointer-events"] = "auto";
+
+				// set up background blocker
+				uiDiv.style["background-color"] = "rgba(0, 0, 0, 0.75)";
+
+				// indicate clickable with hand cursor (desktop)
+				let buttonEnter = document.getElementById("buttonEnter");
+				buttonEnter.style.cursor = "pointer";
+
+				// fade-in functionality
+				let fadeIn = function()
+				{
+					// allow point events again
+					uiDiv.style["pointer-events"] = "none";
+
+					// remove startButton
+					buttonEnter.parentNode.remove(buttonEnter);
+
+					// fade out uiDiv background
+					uiDiv.style["background-color"] = "rgba(0, 0, 0, 0.0)";
+		    		uiDiv.style["transition"] = "background-color 1000ms linear";
+
+		    		// activate the spawner
+					let camera = document.querySelector("#camera");
+					camera.setAttribute("spawner", "");
+				}
+
+				// activate for desktop/touchscreen
+				buttonEnter.addEventListener('touchstart', fadeIn);
+				buttonEnter.addEventListener('mousedown',  fadeIn);
+			}
+		});
+		*/
+		</script>
+
+		<script src="./data/sin.js"></script>
+
+
+	</head>
+
+	<!--ズームなどの一部動作の制限-->
+	<body style="touch-action:none">
+
+		<!--iOSにおいてDeviceMotion取得するために、ユーザーに画面タッチを強制-->
+		<div id="ui" class="permission_ui">
+			<p id="discription" class="permission_ui center_ui">画面をタッチしてください</p>
+		</div>
+
+		<!--3D空間-->
+		
+		<!--
+		permission_uiを優先するために初期状態では表示しない
+		device-orientation-permission-uiをfalseにすることでa-frameにデフォルトで搭載されているDeviceMotion取得用UIを無視
+		embedded arjsでarモードを有効化
+		vr-mode-uiをfalseにすることで右下の謎のボタンを削除(Androidだとできてない？)
+		id="main"は今のところ意味なし
+		-->
+		<a-scene id="main" device-orientation-permission-ui="enabled: false" embedded arjs vr-mode-ui="enabled: false;" style="display: none; position: static;">	
+			<a-assets>
+				<img id="fireball" src="images/fireball.png"/>	
+				<img id="fireballSheet" src="images/fireball-up.png"/>
+		  	</a-assets>
+			<a-entity id='camera' camera look-controls="touchEnabled: false;" wasd-controls position="0 8 0"></a-entity>
+				
+				<!--移動オブジェクトの移動先の取得-->
+			<a-entity cursor="rayOrigin: mouse" raycaster="objects: #target;"></a-entity> 
+
+			<!--rayの衝突用-->
+			<a-plane cursor-listener id="target" rotation = "-90 0 0" position="0 -5 0" scale="255 255 1" color = "red" opacity = "0"></a-plane>
+			
+		</a-scene>
+
+
+		<!--  FIRE!!!!!!  -->
+		<input type = "button" id = "b1" value = "打ち上げ" onclick = "tenka();" style="display:none">
+		
+		<!--仮UI-->
+
+
+		<!--JS用-->
+		<script>
+		var pNumber = 7;
+		var pipes = [];
+		var childs = [];
+		var waiting = true;
+
+		for (let i = 0; i < pNumber; i++) {
+
+			new_gltf_model = document.createElement('a-gltf-model');
+			new_gltf_model.setAttribute('id', 'i');
+			//new_gltf_model.setAttribute('dynamic-body', 'shape: cube; mass: 1');
+			new_gltf_model.setAttribute('scale', '0.6 0.6 0.6');
+			new_gltf_model.setAttribute('position', '0 0 0');
+			new_gltf_model.setAttribute('src', '#model-tube');
+
+			pipes.push(new_gltf_model);
+
+
+			let pos = pipes[i].getAttribute('position');
+			pos.x = Math.random() * 25 - 12.5;
+			pos.y = 0;
+			pos.z = Math.random() * -25 - 5;
+			pipes[i].setAttribute('position', pos);
+			pipes[i].setAttribute('id', i);
+			document.querySelector('a-scene').appendChild(pipes[i]);
+
+			let bool = false;
+			childs.push(bool);
+		}
+
+
+		AFRAME.registerComponent('box-colider', {
+			tick: function () {
+				let pos = this.el.getAttribute('position');
+				for (let i = 0; i < pNumber; i++) {
+
+					let p = pipes[i].getAttribute('position');
+
+					if (!childs[i]) {
+
+						if (p.x > pos.x - 2.5 && p.x < pos.x + 2.5 &&
+							p.y > pos.y - 25 && p.y < pos.y + 25 &&
+							p.z > pos.z - 2.5 && p.z < pos.z + 2.5) {
+							childs[i] = true;
+						}
+
+					} else {
+
+						p.x = pos.x - 0.03 + (0.38 * i);
+						p.y = pos.y;
+						p.z = pos.z - 0.01;
+						pipes[i].setAttribute('position', p);
+					}
+
+				}
+			}
+		});
+
+		function tenka() {
+			let ranNum = Math.floor(Math.random() * pNumber);
+			let ranWait = Math.random() * 2500 + 500;
+			/*
+			let col;
+			if (ranNum % 3 == 0) {
+				col = '#ff7d7d';
+			} else if (ranNum % 3 == 1) {
+				col = '#7d7dff';
+			} else {
+				col = '#7dff7d'
+			}
+			*/
+
+			if (childs[ranNum] == true) {
+				//hanabi(pipes[ranNum].getAttribute('position').x - 0.38*3, pipes[ranNum].getAttribute('position').y, pipes[ranNum].getAttribute('position').z, col);
+				console.log( "Firework!" );
+
+				let x = pipes[ranNum].getAttribute('position').x - 0.38*3;
+				let y = pipes[ranNum].getAttribute('position').y + 0.6;
+				let z = pipes[ranNum].getAttribute('position').z;
+
+				let firework = document.createElement("a-entity");
+				firework.setAttribute("firework", "");
+				firework.setAttribute("position", {"x":x, "y":y, "z":z} );
+
+				// random flight parameters
+				let maxHeight = randomNormal(16, 20);
+				firework.setAttribute("firework", "maxHeight", maxHeight );
+				let riseTime = randomNormal(4, 5);
+				firework.setAttribute("firework", "riseTime", riseTime );
+				document.getElementById('main').appendChild( firework );
+				}
+
+			setTimeout(() => {tenka()}, ranWait);
+		}
+		</script>
+
+		<script src="./data/tsts.js"></script>
+	</body>
+</html>
