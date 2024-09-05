@@ -63,3 +63,15 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 .deleted_ui {
 	display: none;
 }
+
+#b1 {
+	font-size: 13px;
+	width: 98%;
+	font-weight: bold;
+	line-height: 16px;
+	position: absolute;
+	left: 20px;
+	bottom: 20px;
+	right: 20px;
+	background-color: rgba(255, 255, 255, 0.3);
+}
