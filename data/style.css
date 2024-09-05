@@ -14,6 +14,7 @@ body {
 	height: 100svh;
 	overflow: auto;
 }
+/*
 @media screen and (orientation:portrait) {
 	#mainWrapper {
 		width: 100svh;
@@ -23,6 +24,7 @@ body {
 		transform-origin: left bottom;
 	}
 }
+*/
 /*
 iOS用に一番最初に表示する画面のcss
 center_uiはもともと中央揃えのコードを実装する予定だったが
@@ -49,9 +51,9 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 
 
 .center_ui {
-  -webkit-text-stroke-width: 3px;
+  -webkit-text-stroke-width: 2px;
   -webkit-text-stroke-color: #fff;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 
