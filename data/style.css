@@ -25,7 +25,8 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	right: 0;
 	left: 0;
 
-	background-color: #fff;
+	background-color: #b0b0b0;
+	opacity: 0.4;
 
 	display: flex;
 	justify-content: center;
