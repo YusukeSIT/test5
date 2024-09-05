@@ -1,18 +1,13 @@
 html {
 	width: 100svw;
 	height: 100svh;
-	overflow: hidden auto;
 }
 body {
 	width: 100svw;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
 }
 #mainWrapper {
 	width:  100svw;
 	height: 100svh;
-	overflow: auto;
 	visibility: hidden;
 }
 /*
