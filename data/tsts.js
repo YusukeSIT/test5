@@ -20,7 +20,7 @@ new_gltf_model.setAttribute('class', 'device');
 new_gltf_model.setAttribute('position', '0 -5 -5');
 new_gltf_model.setAttribute('rotation', '0 0 0');
 new_gltf_model.setAttribute('scale', '0.6 0.6 0.6')
-new_gltf_model.setAttribute('src', '#model-frame');
+//new_gltf_model.setAttribute('src', '#model-frame');
 new_gltf_model.setAttribute('box-colider', '');
 
 document.querySelector('a-scene').appendChild(new_gltf_model);
