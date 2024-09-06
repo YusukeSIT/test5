@@ -43,6 +43,8 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	align-items: center;
 	position: absolute;
 	visibility: visible;
+	margin: 0;
+	padding: 0;
 }
 
 
@@ -86,6 +88,8 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	left: 0;
 	top: 0;
 	bottom: 0;
+	padding: 0;
+	margin: 0;
 }
 
 #UIVisibilityButton {
@@ -100,7 +104,7 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	position: relative;
 	height: 100%;
 	width: 200px;
-	background-color: rgba(178, 178, 178, 0.3);
+	background-color: rgba(178, 178, 178, 0.5);
 	float: left;
 }
 
