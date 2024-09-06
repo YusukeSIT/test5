@@ -337,34 +337,40 @@
 		FIRE!!!!!!
 		<input type = "button" id = "b1" value = "打ち上げ" onclick = "tenka();" style="display:none">
 		-->
-
-		<div id="UIVisibilityButton"><input type="button" value="X" onclick="changeUI();"></div>
-		<div id="UIWrapper" style="display: none">
-			<ul>
-				<li>
+		<div id="SideUIWrapper">
+			
+			<div id="UIVisibilityButton"><input type="button" value="≪" onclick="changeUI();"></div>
+			<div id="SideUI">
+				<ul>
 					<div class="next">
-						<img src="歯車アイコン">
-						<p>設定</p>
+						<h3>設定</h3>
 					</div>
-				</li>
-				<li>
-					<p>画面の向き</p>
-					<label><input type="radio" value="横画面">横画面</label>
-					<label><input type="radio" value="縦画面">縦画面</label>
-				</li>
-				<li>
-					<p>発射装置の横幅</p>
-					<input type="number" min="1" max="20">
-				</li>
-				<li>
-					<p>筒の数</p>
-					<input type="number" min="1" max="20">
-				</li>
-				<li>
-					<p>発射装置の表示切替</p>
-					<label><input type="checkbox" name="check" class="check" value="visible">表示</label>
-				</li>
-			</ul>
+					<li>
+						<p>画面の向き</p>
+						<label><input type="radio" name="display" value="横画面">横画面</label>
+						<label><input type="radio" name="display" value="縦画面">縦画面</label>
+					</li>
+					<li>
+						<p>発射装置の横幅</p>
+						<input type="number" min="1" max="20">
+					</li>
+					<li>
+						<p>筒の数</p>
+						<input type="number" min="1" max="20">
+					</li>
+					<li>
+						<p>発射頻度</p>
+						<label><input type="radio" name="frequency" value="x1">x1</label>
+						<label><input type="radio" name="frequency" value="x2">x2</label>
+						<label><input type="radio" name="frequency" value="x3">x3</label>
+					</li>
+					<li>
+						<p>発射装置の表示切替</p>
+						<label><input type="checkbox" name="check" class="check" value="visible">表示</label>
+					</li>
+				</ul>
+			</div>
+
 		</div>
 
 		
