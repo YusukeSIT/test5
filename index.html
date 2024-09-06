@@ -384,6 +384,7 @@
 		var pNumber = 7;
 		var pipes = [];
 		var childs = [];
+		var frequ = 1.0;
 
 		function createPipes() {
 			for (let i = 0; i < pNumber; i++) {
@@ -445,7 +446,6 @@
 		});
 
 		function tenka() {
-			var frequ = 1.0;
 			let ranNum = Math.floor(Math.random() * pNumber);
 			let ranWait = Math.random() * 2500;
 			ranWait = ranWait / frequ;
@@ -462,8 +462,6 @@
 
 			if (childs[ranNum] == true) {
 				//hanabi(pipes[ranNum].getAttribute('position').x - 0.38*3, pipes[ranNum].getAttribute('position').y, pipes[ranNum].getAttribute('position').z, col);
-				console.log( ranWait );
-
 				let x = pipes[ranNum].getAttribute('position').x - 0.38*3;
 				let y = pipes[ranNum].getAttribute('position').y + 0.6;
 				let z = pipes[ranNum].getAttribute('position').z;
