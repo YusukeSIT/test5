@@ -109,7 +109,7 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	ul, li, p {
 		margin-top: 0;
 		margin-bottom: 2px;
-	}
+	},
 	h3 {
 		margin-top: 4px;
 		margin-bottom: 4px;
