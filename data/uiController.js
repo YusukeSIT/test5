@@ -46,13 +46,13 @@ DeviceVisible.addEventListener('input', function() {
 	let devices = document.getElementsByClassName('device');
 	if (DeviceVisible.checked) {
 		for (let i = 0; i < devices.length; i++) {
-			devices.setAttribute('opacity', '1');
+			devices[i].setAttribute('opacity', '1');
 			console.log("B");
 		}
 	}
 	else {
 		for (let i = 0; i < devices.length; i++) {
-			devices.setAttribute('src', '');
+			devices[i].setAttribute('src', '');
 			console.log("A");
 		}
 	}
