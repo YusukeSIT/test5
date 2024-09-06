@@ -105,6 +105,14 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	display: flex;
 }
 
+
+#shutter {
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, 0);
+	bottom: 10%;
+}
+
 @media screen and (orientation:landscape) {
 	ul, li, p {
 		margin-top: 0;
@@ -113,5 +121,12 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	h3 {
 		margin-top: 4px;
 		margin-bottom: 4px;
+	},
+	#shutter {
+		position: absolute;
+		top: 50%;
+		transform: translate(0, -50%);
+		right: 10%;
 	}
 }
+
