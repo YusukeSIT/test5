@@ -105,24 +105,30 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 	display: flex;
 }
 
-
-#shutter {
-	position: absolute;
-	left: 50%;
-	transform: translate(-50%, 0);
-	bottom: 10%;
-	opacity: 0.6;
+@media screen and (orientation:portrait) {
+	#shutter {
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, 0);
+		bottom: 10%;
+		opacity: 0.6;
+	}
 }
+
 
 @media screen and (orientation:landscape) {
 	ul, li, p {
 		margin-top: 0;
 		margin-bottom: 2px;
-	},
+	}
+}
+@media screen and (orientation:landscape) {
 	h3 {
 		margin-top: 3px;
 		margin-bottom: 3px;
-	},
+	}
+}
+@media screen and (orientation:landscape) {
 	#shutter {
 		position: absolute;
 		top: 50%;
@@ -130,4 +136,3 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 		right: 10%;
 	}
 }
-
