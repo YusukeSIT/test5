@@ -352,21 +352,23 @@
 					</li>
 					<li>
 						<p>発射装置の横幅</p>
-						<label><input type="number" min="1" max="20" value="1">m</label>
+						<label><input id="wide" type="number" min="1" max="20" value="1">m</label>
 					</li>
 					<li>
 						<p>筒の数</p>
-						<input type="number" min="1" max="20" value="7">
+						<input id="pNumber" type="number" min="1" max="20" value="7">
 					</li>
 					<li>
-						<p>発射頻度</p>
-						<label><input type="radio" name="frequency" value="x1" checked>x1</label>
-						<label><input type="radio" name="frequency" value="x2">x2</label>
-						<label><input type="radio" name="frequency" value="x3">x3</label>
+						<div id="freq">
+							<p>発射頻度</p>
+							<label><input type="radio" name="frequency" value="1.0" checked>x1</label>
+							<label><input type="radio" name="frequency" value="2.0">x2</label>
+							<label><input type="radio" name="frequency" value="3.0">x3</label>
+						</div>
 					</li>
 					<li>
 						<p>発射装置の表示切替</p>
-						<label><input type="checkbox" name="check" class="check" value="visible">表示</label>
+						<label><input type="checkbox" name="visibility" value="visible" checked>表示</label>
 					</li>
 				</ul>
 			</div>
@@ -437,8 +439,10 @@
 		});
 
 		function tenka() {
+			var frequ = 1.0;
 			let ranNum = Math.floor(Math.random() * pNumber);
 			let ranWait = Math.random() * 2500 + 500;
+			ranWait /= frequ;
 			/*
 			let col;
 			if (ranNum % 3 == 0) {
@@ -475,6 +479,7 @@
 		document.addEventListener("click", tenka(), true);
 		</script>
 		<script src="./data/tsts.js"></script>
+		<script src="data/uiController.js"></script>
 
 	</body>
 </html>
