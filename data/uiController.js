@@ -47,11 +47,13 @@ DeviceVisible.addEventListener('input', function() {
 	if (DeviceVisible.checked) {
 		for (let i = 0; i < devices.length; i++) {
 			devices.setAttribute('opacity', '1');
+			console.log("B");
 		}
 	}
 	else {
 		for (let i = 0; i < devices.length; i++) {
 			devices.setAttribute('src', '');
+			console.log("A");
 		}
 	}
 });
