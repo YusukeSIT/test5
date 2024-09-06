@@ -51,7 +51,7 @@ DeviceVisible.addEventListener('input', function() {
 	}
 	else {
 		for (let i = 0; i < devices.length; i++) {
-			devices.setAttribute('opacity', '0');
+			devices.setAttribute('src', '');
 		}
 	}
 });
