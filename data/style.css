@@ -120,8 +120,8 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 		margin-bottom: 2px;
 	},
 	h3 {
-		margin-top: 4px;
-		margin-bottom: 4px;
+		margin-top: 3px;
+		margin-bottom: 3px;
 	},
 	#shutter {
 		position: absolute;
