@@ -1,5 +1,18 @@
-let 
-
+let uiButton = document.getElementById("UIVisibilityButton");
+let sideUI = document.getElementById("SideUI");
+var visible = true;
+function changeUI() {
+	if (visible) {
+		sideUI.setAttribute('style', 'display:none');
+		uiButton.setAttribute('value', '≫');
+		visible = false;
+	}
+	if (!visible) {
+		sideUI.setAttribute('style', 'display:block');
+		uiButton.setAttribute('value', '≪');
+		visible = true;
+	}
+}
 
 
 

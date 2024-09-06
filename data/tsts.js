@@ -42,7 +42,7 @@ document.addEventListener('click', () => {
                             del.setAttribute('class', 'deleted_ui');
                           });
                           document.getElementById('main').removeAttribute('style');
-                          document.getElementById('b1').removeAttribute('style');
+                          document.getElementById('SideUIWrapper').removeAttribute('style');
 
                        } else {                        
                         document.getElementById("discription").innerHTML = "ブラウザの「カメラ」　「動作の取得」を許可してください"
@@ -55,6 +55,7 @@ document.addEventListener('click', () => {
       del.setAttribute('class', 'deleted_ui');
     });
     document.getElementById('main').removeAttribute('style');
+    document.getElementById('SideUIWrapper').removeAttribute('style');
 
   }
 }, {
