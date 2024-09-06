@@ -448,7 +448,7 @@
 			var frequ = 1.0;
 			let ranNum = Math.floor(Math.random() * pNumber);
 			let ranWait = Math.random() * 2500;
-			ranWait /= frequ;
+			ranWait = ranWait / frequ;
 			/*
 			let col;
 			if (ranNum % 3 == 0) {
@@ -462,7 +462,7 @@
 
 			if (childs[ranNum] == true) {
 				//hanabi(pipes[ranNum].getAttribute('position').x - 0.38*3, pipes[ranNum].getAttribute('position').y, pipes[ranNum].getAttribute('position').z, col);
-				console.log( "Firework!" );
+				console.log( ranWait );
 
 				let x = pipes[ranNum].getAttribute('position').x - 0.38*3;
 				let y = pipes[ranNum].getAttribute('position').y + 0.6;
