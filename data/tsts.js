@@ -15,6 +15,7 @@ document.querySelector('a-scene').appendChild(new_assets);
 //　木枠の生成
 new_gltf_model = document.createElement('a-gltf-model');
 new_gltf_model.setAttribute('id', 'frame');
+new_gltf_model.setAttribute('class', 'device');
 //new_gltf_model.setAttribute('dynamic-body', 'shape: cube; mass: 1');
 new_gltf_model.setAttribute('position', '0 -5 -5');
 new_gltf_model.setAttribute('rotation', '0 0 0');

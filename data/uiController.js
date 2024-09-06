@@ -1,6 +1,7 @@
 let uiButton = document.getElementById("UIVisibilityButton");
 let sideUI = document.getElementById("SideUI");
 var visible = true;
+
 function changeUI() {
 	if (visible == true) {
 		sideUI.setAttribute('style', 'display:none');
@@ -17,8 +18,12 @@ function changeUI() {
 }
 
 
+let pipeNumber = document.getElementById('pNumber');
 
-
+pipeNumber.addEventListener('input', function() {
+	pNumber = pipeNumber.getAttribute('value');
+	createPipes();
+});
 
 
 
@@ -33,3 +38,20 @@ freqController.addEventListener('input', function() {
 	}
 });
 
+
+
+let DeviceVisible = document.getElementById('visible');
+
+DeviceVisible.addEventListener('input', function() {
+	let devices = document.getElementsByClassName('device');
+	if (DeviceVisible.checked) {
+		for (let i = 0; i < devices.length; i++) {
+			devices.setAttribute('opacity', '1');
+		}
+	}
+	else {
+		for (let i = 0; i < devices.length; i++) {
+			devices.setAttribute('opacity', '0');
+		}
+	}
+});

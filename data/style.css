@@ -10,17 +10,7 @@ body {
 	height: 100svh;
 	visibility: hidden;
 }
-/*
-@media screen and (orientation:portrait) {
-	#mainWrapper {
-		width: 100svh;
-		height: 100svw;
-		margin: -100svw 0 100svh;
-		transform: rotate(90deg);
-		transform-origin: left bottom;
-	}
-}
-*/
+
 /*
 iOS用に一番最初に表示する画面のcss
 center_uiはもともと中央揃えのコードを実装する予定だったが
@@ -110,4 +100,11 @@ center_uiはもともと中央揃えのコードを実装する予定だった�
 
 .next {
 	display: flex;
+}
+
+@media screen and (orientation:landscape) {
+	ul, li, p {
+		margin-top: 0;
+		margin-bottom: 4px;
+	}
 }

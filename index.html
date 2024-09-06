@@ -368,7 +368,7 @@
 					</li>
 					<li>
 						<p>発射装置の表示切替</p>
-						<label><input type="checkbox" name="visibility" value="visible" checked>表示</label>
+						<label><input id="visible" type="checkbox" name="visibility" value="visible" checked>表示</label>
 					</li>
 				</ul>
 			</div>
@@ -384,31 +384,37 @@
 		var pNumber = 7;
 		var pipes = [];
 		var childs = [];
-		var waiting = true;
 
-		for (let i = 0; i < pNumber; i++) {
+		function createPipes() {
+			for (let i = 0; i < pNumber; i++) {
 
-			new_gltf_model = document.createElement('a-gltf-model');
-			new_gltf_model.setAttribute('id', 'i');
-			//new_gltf_model.setAttribute('dynamic-body', 'shape: cube; mass: 1');
-			new_gltf_model.setAttribute('scale', '0.6 0.6 0.6');
-			new_gltf_model.setAttribute('position', '0 0 0');
-			new_gltf_model.setAttribute('src', '#model-tube');
+				new_gltf_model = document.createElement('a-gltf-model');
+				new_gltf_model.setAttribute('id', 'i');
+				new_gltf_model.setAttribute('class', 'device pipes');
+				//new_gltf_model.setAttribute('dynamic-body', 'shape: cube; mass: 1');
+				new_gltf_model.setAttribute('scale', '0.6 0.6 0.6');
+				new_gltf_model.setAttribute('position', '0 0 0');
+				new_gltf_model.setAttribute('src', '#model-tube');
 
-			pipes.push(new_gltf_model);
+				pipes.push(new_gltf_model);
 
 
-			let pos = pipes[i].getAttribute('position');
-			pos.x = Math.random() * 25 - 12.5;
-			pos.y = 0;
-			pos.z = Math.random() * -25 - 5;
-			pipes[i].setAttribute('position', pos);
-			pipes[i].setAttribute('id', i);
-			document.querySelector('a-scene').appendChild(pipes[i]);
+				let pos = pipes[i].getAttribute('position');
+				pos.x = Math.random() * 25 - 12.5;
+				pos.y = 0;
+				pos.z = Math.random() * -25 - 5;
+				pipes[i].setAttribute('position', pos);
+				pipes[i].setAttribute('id', i);
+				document.querySelector('a-scene').appendChild(pipes[i]);
 
-			let bool = false;
-			childs.push(bool);
+				let bool = true;
+				childs.push(bool);
+			}
 		}
+
+		createPipes();
+
+		
 
 
 		AFRAME.registerComponent('box-colider', {
@@ -441,7 +447,7 @@
 		function tenka() {
 			var frequ = 1.0;
 			let ranNum = Math.floor(Math.random() * pNumber);
-			let ranWait = Math.random() * 2500 + 500;
+			let ranWait = Math.random() * 2500;
 			ranWait /= frequ;
 			/*
 			let col;
